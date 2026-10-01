@@ -2,247 +2,293 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#14651f">
     <title>Hamburgão do Gedi - Cardápio</title>
     <style>
         :root {
-            --cor-forte: #ef5723;
-            --cor-fraca: #f07c22;
+            --verde-escuro: #14651f;
+            --verde: #249a2c;
+            --verde-claro: #7cc242;
+            --amarelo: #ffde17;
+            --amarelo-claro: #fff8c9;
+            --texto: #1d2a1d;
+            --texto-fraco: #5a6a5a;
+            --whatsapp: #1da851;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, var(--cor-forte), var(--cor-fraca));
+            background: linear-gradient(180deg, var(--verde-escuro), var(--verde) 35%, var(--verde-claro) 70%, var(--amarelo));
+            background-attachment: fixed;
             min-height: 100vh;
-            padding: 20px;
-            font-size: 18px;
-            line-height: 1.6;
+            font-size: 16px;
+            line-height: 1.4;
+            color: var(--texto);
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 720px;
             margin: 0 auto;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            overflow: hidden;
+            /* espaço para o botão fixo do WhatsApp não cobrir o rodapé */
+            padding-bottom: calc(84px + env(safe-area-inset-bottom));
         }
 
         .header {
-            background: linear-gradient(135deg, var(--cor-forte), var(--cor-fraca));
+            background: linear-gradient(180deg, var(--verde-escuro), var(--verde));
             color: white;
             text-align: center;
-            padding: 30px 20px;
-        }
-
-        .logo {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 10px;
+            padding: 16px 16px 12px;
         }
 
         .logo-img {
-            max-width: 300px;
+            width: 150px;
             height: auto;
-            margin-bottom: 10px;
-            background: transparent !important;
-            object-fit: contain;
-            /* Força a transparência */
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
+            display: block;
+            margin: 0 auto;
         }
 
         .subtitle {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-style: italic;
             font-size: 1.5rem;
-            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 6px;
         }
 
-        .contact-info {
-            background: #333;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            font-size: 1.2rem;
+        .subtitle::before,
+        .subtitle::after {
+            content: "";
+            flex: 1;
+            height: 2px;
+            background: rgba(255,255,255,0.85);
         }
 
-        .whatsapp {
-            color: #25d366;
+        .atalhos {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 10px 12px;
+            background: var(--verde-escuro);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+            scrollbar-width: none;
+        }
+
+        .atalhos::-webkit-scrollbar {
+            display: none;
+        }
+
+        .atalhos a {
+            flex: none;
+            padding: 9px 14px;
+            border-radius: 999px;
+            background: var(--amarelo);
+            color: var(--verde-escuro);
+            font-weight: bold;
+            font-size: 0.95rem;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .menu-section {
+            padding: 4px 14px 8px;
+        }
+
+        .menu-category,
+        .payment-section {
+            /* não deixar o título escondido atrás da barra de atalhos */
+            scroll-margin-top: 62px;
+        }
+
+        .category-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--verde-escuro);
+            text-transform: uppercase;
+            margin: 18px 0 4px;
+            padding-bottom: 6px;
+            border-bottom: 4px solid var(--amarelo);
+        }
+
+        .menu-item {
+            padding: 11px 2px;
+            border-bottom: 1px solid #e2ead8;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .item-name {
+            font-size: 1.08rem;
             font-weight: bold;
         }
 
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 0;
+        .item-price {
+            flex: none;
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: var(--verde-escuro);
+            background: var(--amarelo);
+            padding: 3px 10px;
+            border-radius: 999px;
+            white-space: nowrap;
         }
 
-        .sidebar {
-            background: #f8f8f8;
-            padding: 30px 20px;
+        .item-description {
+            font-size: 0.93rem;
+            color: var(--texto-fraco);
+            margin-top: 3px;
+            padding-right: 16px;
         }
 
         .payment-section {
-            margin-bottom: 30px;
+            background: var(--amarelo-claro);
+            padding: 18px 14px 22px;
+            margin-top: 10px;
         }
 
         .payment-title {
-            font-size: 1.4rem;
+            font-size: 1.25rem;
             font-weight: bold;
-            color: #333;
-            margin-bottom: 15px;
+            color: var(--verde-escuro);
+            margin-bottom: 12px;
         }
 
         .payment-item {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-            padding: 10px;
+            margin-bottom: 8px;
+            padding: 10px 12px;
             background: white;
             border-radius: 10px;
-            border-left: 4px solid var(--cor-forte);
+            border-left: 5px solid var(--verde);
         }
 
         .pix-info {
-            background: #e8f5e8;
-            padding: 15px;
+            background: white;
+            padding: 12px;
             border-radius: 10px;
-            margin-top: 15px;
+            border: 2px dashed var(--verde);
+            margin-top: 12px;
         }
 
         .pix-name {
             font-weight: bold;
-            color: #2d5a2d;
+            color: var(--verde-escuro);
         }
 
-        .menu-section {
-            padding: 30px 20px;
+        .pix-linha {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 6px 0;
         }
 
-        .menu-title {
-            font-size: 2rem;
+        #pix-numero {
             font-weight: bold;
-            color: #333;
-            text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 3px solid var(--cor-forte);
-            padding-bottom: 15px;
-        }
-
-        .menu-category {
-            margin-bottom: 40px;
-        }
-
-        .category-title {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--cor-forte);
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            border-bottom: 2px solid var(--cor-fraca);
-            padding-bottom: 10px;
-        }
-
-        .menu-item {
-            background: #f9f9f9;
-            margin-bottom: 15px;
-            padding: 20px;
-            border-radius: 15px;
-            border-left: 5px solid var(--cor-forte);
-            transition: transform 0.2s;
-        }
-
-        .menu-item:hover {
-            transform: translateX(5px);
-            background: #fff3e0;
-        }
-
-        .item-name {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .item-price {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: var(--cor-forte);
-            margin-bottom: 5px;
-        }
-
-        .item-description {
             font-size: 1.1rem;
-            color: #666;
-            font-style: italic;
+        }
+
+        #copiar-pix {
+            min-height: 44px;
+            padding: 0 18px;
+            border-radius: 10px;
+            border: none;
+            background: var(--verde-escuro);
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #copiado-msg {
+            display: none;
+            color: var(--verde-escuro);
+            font-weight: bold;
         }
 
         .footer {
-            background: #333;
-            color: white;
+            background: var(--verde-escuro);
+            color: var(--amarelo);
             text-align: center;
-            padding: 20px;
-            font-size: 1.2rem;
+            padding: 16px;
+            font-size: 1.05rem;
         }
 
-        @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .sidebar {
-                order: 2;
-            }
-            
-            .menu-section {
-                order: 1;
-            }
-            
-            body {
-                font-size: 16px;
-                padding: 10px;
-            }
-            
-            .logo {
-                font-size: 2rem;
-            }
-            
-            .menu-title {
-                font-size: 1.6rem;
-            }
-            
-            .category-title {
-                font-size: 1.4rem;
-            }
-            
-            .item-name {
-                font-size: 1.2rem;
-            }
-            
-            .item-price {
-                font-size: 1.4rem;
-            }
+        .whatsapp-fixo {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: calc(12px + env(safe-area-inset-bottom));
+            width: calc(100% - 24px);
+            max-width: 480px;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 56px;
+            padding: 6px 16px;
+            border-radius: 999px;
+            background: var(--whatsapp);
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+            line-height: 1.15;
         }
 
-        @media (max-width: 480px) {
+        .whatsapp-fixo .icone {
+            font-size: 1.5rem;
+        }
+
+        .whatsapp-fixo strong {
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .whatsapp-fixo small {
+            display: block;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        @media (min-width: 760px) {
             .container {
-                border-radius: 10px;
+                margin: 24px auto;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             }
-            
-            .header {
-                padding: 20px 15px;
+
+            .logo-img {
+                width: 200px;
             }
-            
-            .menu-section {
-                padding: 20px 15px;
-            }
-            
-            .sidebar {
-                padding: 20px 15px;
+
+            .menu-section,
+            .payment-section {
+                padding-left: 28px;
+                padding-right: 28px;
             }
         }
     </style>
@@ -250,234 +296,285 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="logo.webp" alt="Hamburgão do Gedi" class="logo-img" loading="lazy">
-            <div class="subtitle">Cardápio Virtual</div>
+            <img src="logo.webp" alt="Hamburgão do Gedi" class="logo-img" width="537" height="465">
+            <div class="subtitle">Cardápio</div>
         </div>
 
-        <div class="contact-info">
-            <div>📱 Pedidos pelo WhatsApp: <a href="https://wa.me/5591981476506" class="whatsapp" target="_blank" style="text-decoration:none; color:#25d366; font-weight:bold;">98147-6506</a></div>
-        </div>
+        <nav class="atalhos" aria-label="Seções do cardápio">
+            <a href="#tradicionais">Tradicionais</a>
+            <a href="#linha-x">Linha X</a>
+            <a href="#eggs">Eggs</a>
+            <a href="#x-eggs">X-Eggs</a>
+            <a href="#bebidas">Bebidas</a>
+            <a href="#pagamento">Pagamento</a>
+        </nav>
 
-        <div class="main-content">
-            <div class="sidebar">
-                <div class="payment-section">
-                    <div class="payment-title">💳 Formas de Pagamento</div>
-                    <div class="payment-item">
-                        <strong>CARTÃO DE DÉBITO</strong>
-                    </div>
-                    <div class="payment-item">
-                        <strong>PIX</strong><br>
-                        QR CODE disponível
-                    </div>
-                    <div class="pix-info">
-                        <div class="pix-name">GEDIAEL TRAJANO DA SILVA</div>
-                        <div>📱 <span id="pix-numero">91 98185-9234</span>
-                            <button id="copiar-pix" style="margin-left:8px; padding:2px 8px; border-radius:5px; border:none; background:#25d366; color:white; cursor:pointer; font-size:0.95em;">Copiar</button>
-                            <span id="copiado-msg" style="display:none; color:#2d5a2d; margin-left:6px; font-size:0.95em;">Copiado!</span>
-                        </div>
-                        <div>🏦 NUBANK</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="menu-section">
-                <div class="menu-title">🍽️ Cardápio</div>
-
-                <div class="menu-category">
-                    <div class="category-title">🍔 Lanches Principais</div>
-                    
-                    <div class="menu-item">
+        <div class="menu-section">
+            <section class="menu-category" id="tradicionais">
+                <h2 class="category-title">🍔 Tradicionais</h2>
+                <div class="menu-item">
+                    <div class="item-top">
                         <div class="item-name">HAMBURGUER</div>
                         <div class="item-price">R$ 14,00</div>
-                        <div class="item-description">Carne de hambúrguer e salada</div>
                     </div>
-
-                    <div class="menu-item">
+                    <div class="item-description">Carne de hambúrguer e salada</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
                         <div class="item-name">CACHORRO QUENTE</div>
                         <div class="item-price">R$ 14,00</div>
-                        <div class="item-description">Picadinho e salada</div>
                     </div>
-
-                    <div class="menu-item">
+                    <div class="item-description">Picadinho e salada</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
                         <div class="item-name">CACHORRÃO</div>
                         <div class="item-price">R$ 16,00</div>
-                        <div class="item-description">Picadinho, salsicha e salada</div>
                     </div>
-
-                    <div class="menu-item">
+                    <div class="item-description">Picadinho, salsicha e salada</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
                         <div class="item-name">MISTO QUENTE</div>
                         <div class="item-price">R$ 14,00</div>
-                        <div class="item-description">Pão, queijo e presunto</div>
                     </div>
-
-                    <div class="menu-item">
+                    <div class="item-description">Pão, queijo e presunto</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
                         <div class="item-name">QUEIJO QUENTE</div>
                         <div class="item-price">R$ 14,00</div>
-                        <div class="item-description">Pão e queijo</div>
                     </div>
-
-                    <div class="menu-item">
+                    <div class="item-description">Pão e queijo</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
                         <div class="item-name">HOT DOG</div>
                         <div class="item-price">R$ 14,00</div>
-                        <div class="item-description">Salsicha e salada</div>
                     </div>
-
-                    <div class="menu-item">
+                    <div class="item-description">Salsicha e salada</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
                         <div class="item-name">BAURU</div>
                         <div class="item-price">R$ 18,00</div>
-                        <div class="item-description">Carne, queijo, presunto e salada</div>
                     </div>
+                    <div class="item-description">Carne, queijo, presunto e salada</div>
+                </div>
+            </section>
 
-                    <div class="menu-item">
+            <section class="menu-category" id="linha-x">
+                <h2 class="category-title">🧀 Linha X</h2>
+                <div class="menu-item">
+                    <div class="item-top">
                         <div class="item-name">X-BURG</div>
                         <div class="item-price">R$ 17,00</div>
-                        <div class="item-description">Carne, queijo e salada</div>
                     </div>
-
-                    <div class="menu-item">
+                    <div class="item-description">Carne, queijo e salada</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
                         <div class="item-name">X-DOG</div>
                         <div class="item-price">R$ 17,00</div>
-                        <div class="item-description">Salsicha, queijo e salada</div>
                     </div>
-
-                    <div class="menu-item">
+                    <div class="item-description">Salsicha, queijo e salada</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
                         <div class="item-name">X-CALABRESA</div>
                         <div class="item-price">R$ 19,00</div>
-                        <div class="item-description">Calabresa, carne, queijo e salada</div>
                     </div>
-
-                    <div class="menu-item">
+                    <div class="item-description">Calabresa, carne, queijo e salada</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
                         <div class="item-name">X-BACON</div>
                         <div class="item-price">R$ 19,00</div>
-                        <div class="item-description">Carne, bacon, queijo e salada</div>
                     </div>
-
-                    <div class="menu-item">
+                    <div class="item-description">Carne, bacon, queijo e salada</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
                         <div class="item-name">X-FRANGO</div>
                         <div class="item-price">R$ 20,00</div>
-                        <div class="item-description">Frango, queijo e salada</div>
                     </div>
-
-                    <div class="menu-item">
-                        <div class="item-name">X-BROCÃO</div>
-                        <div class="item-price">R$ 48,00</div>
-                        <div class="item-description">Carne de hambúrguer, queijo, presunto, salsicha, bacon, picadinho, calabresa, ovo e salada</div>
-                    </div>
-
-                    <div class="menu-item">
-                        <div class="item-name">EGGS BURG</div>
-                        <div class="item-price">R$ 19,00</div>
-                        <div class="item-description">Carne, ovo, queijo e salada</div>
-                    </div>
-
-                    <div class="menu-item">
-                        <div class="item-name">EGGS DOG</div>
-                        <div class="item-price">R$ 18,00</div>
-                        <div class="item-description">Salsicha, ovo, queijo e salada</div>
-                    </div>
-
-                    <div class="menu-item">
-                        <div class="item-name">EGGS AMERICANO</div>
-                        <div class="item-price">R$ 18,00</div>
-                        <div class="item-description">Pão de forma, queijo, presunto, ovo e salada</div>
-                    </div>
-
-                    <div class="menu-item">
-                        <div class="item-name">EGGS CALABRESA</div>
-                        <div class="item-price">R$ 21,00</div>
-                        <div class="item-description">Carne de hambúrguer, calabresa, ovo, queijo e salada</div>
-                    </div>
-
-                    <div class="menu-item">
-                        <div class="item-name">EGGS BACON</div>
-                        <div class="item-price">R$ 22,00</div>
-                        <div class="item-description">Carne de hambúrguer, bacon, ovo, queijo e salada</div>
-                    </div>
-
-                    <div class="menu-item">
-                        <div class="item-name">EGGS FRANGO</div>
-                        <div class="item-price">R$ 22,00</div>
-                        <div class="item-description">Frango, ovo, queijo e salada</div>
-                    </div>
-
-                    <div class="menu-item">
-                        <div class="item-name">EGGS FANTASIA</div>
-                        <div class="item-price">R$ 21,00</div>
-                        <div class="item-description">Carne de hambúrguer, presunto, salsicha, ovo e salada</div>
-                    </div>
-
-                    <div class="menu-item">
-                        <div class="item-name">X-EGGS BURG</div>
-                        <div class="item-price">R$ 21,00</div>
-                        <div class="item-description">Carne de hambúrguer, ovo, queijo, presunto e salada</div>
-                    </div>
-
-                    <div class="menu-item">
-                        <div class="item-name">X-EGGS DOG</div>
-                        <div class="item-price">R$ 21,00</div>
-                        <div class="item-description">Salsicha, ovo, queijo, presunto e salada</div>
-                    </div>
-
-                    <div class="menu-item">
-                        <div class="item-name">X-EGGS CALABRESA</div>
-                        <div class="item-price">R$ 24,00</div>
-                        <div class="item-description">Carne de hambúrguer, calabresa, ovo, queijo, presunto e salada</div>
-                    </div>
-
-                    <div class="menu-item">
-                        <div class="item-name">X-EGGS BACON</div>
-                        <div class="item-price">R$ 24,00</div>
-                        <div class="item-description">Carne de hambúrguer, bacon, ovo, queijo, presunto e salada</div>
-                    </div>
-
-                    <div class="menu-item">
-                        <div class="item-name">X-EGGS FRANGO</div>
-                        <div class="item-price">R$ 24,00</div>
-                        <div class="item-description">Frango, ovo, queijo, presunto e salada</div>
-                    </div>
-
-                    <div class="menu-item">
+                    <div class="item-description">Frango, queijo e salada</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
                         <div class="item-name">X-DELÍCIA</div>
                         <div class="item-price">R$ 24,00</div>
-                        <div class="item-description">Frango, salsicha, queijo, presunto e salada</div>
                     </div>
+                    <div class="item-description">Frango, salsicha, queijo, presunto e salada</div>
                 </div>
+                <div class="menu-item">
+                    <div class="item-top">
+                        <div class="item-name">X-BROCÃO</div>
+                        <div class="item-price">R$ 48,00</div>
+                    </div>
+                    <div class="item-description">Carne de hambúrguer, queijo, presunto, salsicha, bacon, picadinho, calabresa, ovo e salada</div>
+                </div>
+            </section>
 
-                <div class="menu-category">
-                    <div class="category-title">🥤 Bebidas</div>
-                    
-                    <div class="menu-item">
+            <section class="menu-category" id="eggs">
+                <h2 class="category-title">🍳 Eggs</h2>
+                <div class="menu-item">
+                    <div class="item-top">
+                        <div class="item-name">EGGS BURG</div>
+                        <div class="item-price">R$ 19,00</div>
+                    </div>
+                    <div class="item-description">Carne, ovo, queijo e salada</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
+                        <div class="item-name">EGGS DOG</div>
+                        <div class="item-price">R$ 18,00</div>
+                    </div>
+                    <div class="item-description">Salsicha, ovo, queijo e salada</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
+                        <div class="item-name">EGGS AMERICANO</div>
+                        <div class="item-price">R$ 18,00</div>
+                    </div>
+                    <div class="item-description">Pão de forma, queijo, presunto, ovo e salada</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
+                        <div class="item-name">EGGS CALABRESA</div>
+                        <div class="item-price">R$ 21,00</div>
+                    </div>
+                    <div class="item-description">Carne de hambúrguer, calabresa, ovo, queijo e salada</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
+                        <div class="item-name">EGGS BACON</div>
+                        <div class="item-price">R$ 22,00</div>
+                    </div>
+                    <div class="item-description">Carne de hambúrguer, bacon, ovo, queijo e salada</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
+                        <div class="item-name">EGGS FRANGO</div>
+                        <div class="item-price">R$ 22,00</div>
+                    </div>
+                    <div class="item-description">Frango, ovo, queijo e salada</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
+                        <div class="item-name">EGGS FANTASIA</div>
+                        <div class="item-price">R$ 21,00</div>
+                    </div>
+                    <div class="item-description">Carne de hambúrguer, presunto, salsicha, ovo e salada</div>
+                </div>
+            </section>
+
+            <section class="menu-category" id="x-eggs">
+                <h2 class="category-title">🍳 X-Eggs</h2>
+                <div class="menu-item">
+                    <div class="item-top">
+                        <div class="item-name">X-EGGS BURG</div>
+                        <div class="item-price">R$ 21,00</div>
+                    </div>
+                    <div class="item-description">Carne de hambúrguer, ovo, queijo, presunto e salada</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
+                        <div class="item-name">X-EGGS DOG</div>
+                        <div class="item-price">R$ 21,00</div>
+                    </div>
+                    <div class="item-description">Salsicha, ovo, queijo, presunto e salada</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
+                        <div class="item-name">X-EGGS CALABRESA</div>
+                        <div class="item-price">R$ 24,00</div>
+                    </div>
+                    <div class="item-description">Carne de hambúrguer, calabresa, ovo, queijo, presunto e salada</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
+                        <div class="item-name">X-EGGS BACON</div>
+                        <div class="item-price">R$ 24,00</div>
+                    </div>
+                    <div class="item-description">Carne de hambúrguer, bacon, ovo, queijo, presunto e salada</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
+                        <div class="item-name">X-EGGS FRANGO</div>
+                        <div class="item-price">R$ 24,00</div>
+                    </div>
+                    <div class="item-description">Frango, ovo, queijo, presunto e salada</div>
+                </div>
+            </section>
+
+            <section class="menu-category" id="bebidas">
+                <h2 class="category-title">🥤 Bebidas</h2>
+                <div class="menu-item">
+                    <div class="item-top">
                         <div class="item-name">COCA COLA LATA</div>
                         <div class="item-price">R$ 7,00</div>
                     </div>
-
-                    <div class="menu-item">
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
                         <div class="item-name">COCA COLA 600ML</div>
                         <div class="item-price">R$ 8,00</div>
                     </div>
-
-                    <div class="menu-item">
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
                         <div class="item-name">COCA COLA 1LT</div>
                         <div class="item-price">R$ 10,00</div>
                     </div>
-
-                    <div class="menu-item">
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
                         <div class="item-name">SUCO NATURAL</div>
                         <div class="item-price">R$ 6,00</div>
                     </div>
-
-                    <div class="menu-item">
+                </div>
+                <div class="menu-item">
+                    <div class="item-top">
                         <div class="item-name">ÁGUA MINERAL</div>
                         <div class="item-price">R$ 4,50</div>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
+
+        <section class="payment-section" id="pagamento">
+            <h2 class="payment-title">💳 Formas de Pagamento</h2>
+            <div class="payment-item">
+                <strong>CARTÃO DE DÉBITO</strong>
+            </div>
+            <div class="payment-item">
+                <strong>PIX</strong><br>
+                QR CODE disponível
+            </div>
+            <div class="pix-info">
+                <div class="pix-name">GEDIAEL TRAJANO DA SILVA</div>
+                <div class="pix-linha">
+                    <span>📱 <span id="pix-numero">91 98185-9234</span></span>
+                    <button id="copiar-pix" type="button">Copiar PIX</button>
+                    <span id="copiado-msg">Copiado!</span>
+                </div>
+                <div>🏦 NUBANK</div>
+            </div>
+        </section>
 
         <div class="footer">
             <div>🙏 Obrigado pela preferência!</div>
         </div>
     </div>
+
+    <a class="whatsapp-fixo" href="https://wa.me/5591981476506" target="_blank" rel="noopener">
+        <span class="icone">📱</span>
+        <span>
+            <strong>Pedir pelo WhatsApp</strong>
+            <small>(91) 98147-6506</small>
+        </span>
+    </a>
 </body>
 <script>
     document.getElementById('copiar-pix').onclick = function() {
@@ -488,14 +585,5 @@
             setTimeout(() => { msg.style.display = 'none'; }, 1500);
         });
     };
-
-    // Garante que a logo seja exibida corretamente
-    window.addEventListener('load', function() {
-        const logoImg = document.querySelector('.logo-img');
-        if (logoImg) {
-            // Força o fundo transparente
-            logoImg.style.background = 'transparent';
-        }
-    });
 </script>
-</html> 
+</html>
